@@ -1,0 +1,2 @@
+[functions.gemini-followup]
+verify_jwt = true
