@@ -245,7 +245,7 @@ function Header({ onKeyClick, hasKey, theme, onToggleTheme }: HeaderProps) {
             AZ
           </div>
           <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            AZ-900 Vibe Prep
+            az900-smart-quiz
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -315,7 +315,7 @@ function TopicsScreen({ onStart, loaded, apiKey, onKeyClick }: TopicsScreenProps
         </div>
         <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-            AZ-900 Vibe Prep
+            az900-smart-quiz
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-base text-slate-600 dark:text-slate-400">
