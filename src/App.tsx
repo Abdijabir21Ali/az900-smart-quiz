@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
+  ArrowLeft,
   ArrowRight,
   Check,
   CheckCircle2,
@@ -75,6 +76,28 @@ export default function App() {
     }
     setQIndex((i) => i + 1);
     setSelected(null);
+    setAnswered(false);
+    setChat([]);
+    setFollowUpText('');
+    setFollowUpError(null);
+  }
+
+  function prevQuestion() {
+    if (qIndex === 0) return;
+    setQIndex((i) => i - 1);
+    setSelected(null);
+    setAnswered(false);
+    setChat([]);
+    setFollowUpText('');
+    setFollowUpError(null);
+  }
+
+  function backToTopics() {
+    setScreen('topics');
+    setDomain(null);
+    setQIndex(0);
+    setSelected(null);
+    setScore(0);
     setAnswered(false);
     setChat([]);
     setFollowUpText('');
@@ -169,6 +192,8 @@ export default function App() {
           loaded={loaded}
           onChooseOption={chooseOption}
           onNext={nextQuestion}
+          onPrev={prevQuestion}
+          onBack={backToTopics}
           onFollowUpText={setFollowUpText}
           onSubmitFollowUp={submitFollowUp}
           onKeyClick={() => setKeyModalOpen(true)}
@@ -414,6 +439,8 @@ interface QuizScreenProps {
   loaded: boolean;
   onChooseOption: (i: number) => void;
   onNext: () => void;
+  onPrev: () => void;
+  onBack: () => void;
   onFollowUpText: (s: string) => void;
   onSubmitFollowUp: () => void;
   onKeyClick: () => void;
@@ -434,6 +461,8 @@ function QuizScreen({
   loaded,
   onChooseOption,
   onNext,
+  onPrev,
+  onBack,
   onFollowUpText,
   onSubmitFollowUp,
   onKeyClick,
@@ -446,7 +475,16 @@ function QuizScreen({
       {/* progress */}
       <div className="mb-6 animate-fade-in">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">{domain}</span>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={onBack}
+              aria-label="Back to topics"
+              className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-all duration-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">{domain}</span>
+          </div>
           <span className="text-slate-500 dark:text-slate-400">
             {qIndex + 1} / {questions.length}
           </span>
@@ -624,8 +662,16 @@ function QuizScreen({
         </div>
       )}
 
-      {/* next */}
-      <div className="mt-6 flex justify-end">
+      {/* next / prev */}
+      <div className="mt-6 flex items-center justify-between">
+        <button
+          onClick={onPrev}
+          disabled={qIndex === 0}
+          className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 font-semibold text-slate-700 transition-all duration-200 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Previous
+        </button>
         <button
           onClick={onNext}
           disabled={!answered}
